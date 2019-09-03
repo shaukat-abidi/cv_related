@@ -1,0 +1,46 @@
+MSR-DATASET
+script_1.m: Generate Dense Sift feature sets with binSize=4,8,16 and storing in dsift_dataset.mat
+
+script_2.m: Load dsift_dataset.mat. Sampling every 5th dense-feature points and accumulating it in a list. Then Apply K-Means to cluster to the accumulated descriptors in 400 clusters. 
+Save the result in 400_clusters_for_descriptors.mat
+
+script_3.m: Takes all images and transforms its superpixels into 455-Dimensions. In the end we have thousands of superpixel with groundTruth class labels [1,23]
+The results are stored in 4-different files (train_data.mat,labels.mat,test_data.mat,test_labels.mat)
+train_data.mat = 43802x455(Contain feature vectors having NaN and Inf Values)
+labels.mat = 43802x1(Contains labels of feature vectors having NaN and Inf Values)
+test_data.mat = 6784x455(MIGHT contain feature vectors having NaN and Inf Values--Haven't checked)
+test_label.mat = 6784x1(MIGHT contain labels of feature vectors having NaN and Inf--Haven't checked)
+
+script_4.m: First filters out feature Vectors containing NaN and Inf values from train_data.m and labels.mat. 
+The indices of defected feature Vectors are stored in "to_remove.mat". Feature Vectors containing NaN and Inf are removed.
+Labels corresponding to those (defected) feature vectors are also removed.
+Then logistic regression classifier is learnt over filtered train set (using labelled training instances from script_3.m) and the weights are stored 
+in "learned_weights.mat"
+
+script_4_ForfilteredData.m: It learns logisitic regression classifier over filtered_testData.mat. filtered_testData.mat consists of:
+testData = 6739x455
+test_label = 6739x1
+It doesn't store weight vector in any file
+
+script_5.m: Measures the accuracy of LRC on test dataset (test dataset is prepared in script-3). Before measuring accuracy and applying filter,
+trainData and labels are filtered again by loading "to_remove.mat". 
+Nothing is stored in a file.
+
+script_6.m: Loading 'train_data.mat','labels.mat','to_remove.mat'. Then filtering train_data and label again using "to_remove.mat"
+Writing training file in the format of LIBSVM and L-SVM (label feature#:value ... ) with a filename: "training_file.txt"
+
+script_6_testdata.m: Loading filtered_testData.mat and writing test file in the format of LIBSVM and L-SVM (label feature#:value ... ) with a filename: "test_file.txt"
+
+script_6_traindata.m: Loading filtered_trainData.mat and writing test file in the format of LIBSVM and L-SVM (label feature#:value ... ) with a filename: "training_file.txt" 
+
+script_7.m: totally irrelevant
+
+STANFORD DATASET
+script_1.m:
+          (1) On single image, we collect D-Sift features with binSinze=4,8,16.
+		  (2) Then each feature is assigned valid segment_id
+		  (3) That feature is assigned BoW representation using  400_clusters_for_descriptors.mat
+			  obtained from script_2 of MSR Dataset
+		  (4) After processing all features, we start processing superpixel
+		  (5) Feature vector of superpixel is computed 
+		  (6) training file is prepared with superpixel feature / action labels / FIDS

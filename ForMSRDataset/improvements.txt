@@ -1,0 +1,4 @@
+1) In script-2, while learning 400 words, we need to run k-means multiple times to avoid random initialization issues. 
+2) Dense Sift verification by Massimo ?? Bin Size is appropriate or not?
+3) Can we use parallel version of K-Means? Does any off the shelf software implement parallel K-Means (Matlab's K-Mean?) 
+4) 

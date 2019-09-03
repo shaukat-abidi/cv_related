@@ -1,0 +1,16 @@
+tic    
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%Classifying Superpixels%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+for iter_examples = 1:size(examples,1)
+    x=examples(iter_examples,:); %examples  = [494366 x 400] 
+    scores=sigmoid(weights,offsets,x');
+    [val,ind] = max(scores);
+    match_probs = [match_probs;scores'];
+    match_latentlabels = [match_latentlabels;ind];
+end
+classifyin_all = toc
+
+classifyin_all =
+
+   1.6470e+04

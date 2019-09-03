@@ -1,0 +1,3 @@
+script_1.m: Get a representation of superpixel with class-label / QID and save them in file
+script_2.m: writing saved representation of feature in LIBSVM format (without QID) with the label (1 out of 40)
+Extra: apply multiclass SVM classifier to get labels of superpixel and then store those labels in a separate file

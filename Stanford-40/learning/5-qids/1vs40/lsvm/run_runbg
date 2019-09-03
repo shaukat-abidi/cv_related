@@ -1,0 +1,17 @@
+make clean
+make
+reset
+
+base_path='/home/ssabidi/Shaukat/Experiments/LatentSVM/Stanford-40/2-Classes/Parallel-Runs/corrected_version/training_files/Full-Dataset/train_files/5qids/'
+prefix_lv_file='lvars_'
+
+train_filename='1vs40.txt'
+lv_filename=$prefix_lv_file$train_filename
+
+prefix_save_model='model_c'
+save_model=$prefix_save_model$train_filename
+
+latent_file_arg=$base_path$lv_filename
+train_file_arg=$base_path$train_filename
+
+nohup ./svm_multiclass_learn -e 0.1 -c 1 -l $latent_file_arg $train_file_arg $save_model </dev/null 1> output.out 2> error.err &

@@ -1,0 +1,12 @@
+text_filename =
+
+/home/ssabidi/Desktop/vlfeat-binary/toolbox/staticAR/ForStanfordDataset/txt/feeding_a_horse_191.txt
+
+Error using rgb2gray>parse_inputs (line 81)
+MAP must be a m x 3 array.
+
+Error in rgb2gray (line 35)
+X = parse_inputs(varargin{:});
+
+Error in script_4 (line 72)
+            I = single(rgb2gray(I)) ;

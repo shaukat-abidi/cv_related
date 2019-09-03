@@ -1,0 +1,62 @@
+%%% Steps for generating superpixels feature set  with MSR-Dataset%%%
+
+%%%%%%%%%%%%%%%%%%%
+STEP-1 (script_1.m)
+%%%%%%%%%%%%%%%%%%%
+Generate Dense Sift feature sets with binSize=4,8,16
+
+%%%%%%%%%%%%%%%%%%%
+STEP-2 (script_2.m)
+%%%%%%%%%%%%%%%%%%%
+Learn visual dictionary with 400 visual words. Now each descriptor (128-D) can be represented by a single entry in the histogram of 400 words 
+Different strategies to initialise cluster centres can be seen on Vedaldi's website. I think we must assign 400 cluster centres with 
+maximal distance criterion
+
+%%%%%%%%%%%%%%%%%%
+STEP-3
+%%%%%%%%%%%%%%%%%%
+Calculate appearance based feature of each superpixel and concatenate it with step#2
+
+%%%%%%%%%
+STEP-4
+%%%%%%%%%
+Form a feature vector (238+400 Dimenstion = 238 appearance based features + 400 BoWs representation of superpixel )
+We dont need it right now: How to calculate BoW representation of neighbours? We need smart technique for finding areas adjacent to superpixel.
+
+%%%%%%%%%%%%%%%%%%
+STEP-5(script_4.m)
+%%%%%%%%%%%%%%%%%%
+Train a logistic regression classifier to classify these superpixels (package: PR-TOOLS)
+
+%%script_5.m%%%: classifies the TRAINING set and measures accuracy of training set 
+%%script_6.m%%%: writes labelled training set in the format of LIBSVM (class# feature#:value) . 7.2705e+03 seconds are taken for 50318 data instances 
+
+%%%%%%%%%
+STEP-6
+%%%%%%%%%
+Train an SVM (binary SVM) to classify these superpixels (Package: Joachims one I guess or LIBSVM, to be decided)
+
+%%%%%%%%%
+STEP-7
+%%%%%%%%%
+Measure the accuracy for both of them
+
+%%%%%%%%%
+STEP-8
+%%%%%%%%%
+Apply the best classifier on Stanford-40 dataset's superpixel. Actually we are initialising values for hidden variable h=1..20
+
+%%%%%%%%%
+STEP-9
+%%%%%%%%%
+Psi feature vector generation
+
+%%%%%%%%%
+STEP-10
+%%%%%%%%%
+Modify inference algorithm. Add greedy part for infering latent variable. After then, we need to iterate until convergence or at least 3 times inside function find_most_violated_constraint
+
+%%%%%%%%%
+STEP-11
+%%%%%%%%%
+Accuracy of our system need to be found. How can we improve it further if there is any roam for improvement?
